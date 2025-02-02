@@ -14,7 +14,10 @@ int main()
     conf.targetFPS = 60;
 
     s_Game.Setup(conf);
+
+    std::unique_ptr<Scene> sampleScene = std::make_unique<Scene>();
     
+    s_Game.GetSceneSystem()->LoadScene(std::move(sampleScene));
     s_Game.Start();
 
     return 0;

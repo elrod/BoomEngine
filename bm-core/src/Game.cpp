@@ -5,12 +5,14 @@
 #include "BMEngine/Game.h"
 #include "BMEngine/Scene.h"
 #include "BMEngine/SceneSystem.h"
+#include "BMEngine/RenderingSystem.h"
 
 using namespace BENG;
 
 Game::Game() 
 {
-    m_sceneSystem = std::make_unique<SceneSystem>();
+    m_SceneSystem = std::make_unique<SceneSystem>();
+    m_RenderingSystem = std::make_unique<RenderingSystem>();
 
     InitWindow(m_gameConf.winWidth, m_gameConf.winHeight, m_gameConf.winTitle);
     SetTargetFPS(m_gameConf.targetFPS);
@@ -34,12 +36,12 @@ void Game::Start() {
 
 SceneSystem* Game::GetSceneSystem()
 {
-    return m_sceneSystem.get();
+    return m_SceneSystem.get();
 }
 
 void Game::Initialize() {
     // Initialize game here
-    m_sceneSystem->GetCurrentScene()->Init();
+    m_SceneSystem->GetCurrentScene()->Init();
     std::cout << "Game initialized!" << std::endl;
 }
 
@@ -50,7 +52,7 @@ void Game::ProcessInput() {
 
 void Game::Update(float dt) {
     // Game logic update code here
-    m_sceneSystem->GetCurrentScene()->Update(dt);
+    m_SceneSystem->GetCurrentScene()->Update(dt);
     std::cout << "Game updated!" << std::endl;
 }
 
@@ -58,6 +60,12 @@ void Game::Draw() {
     // Drawing code here
     BeginDrawing();
         ClearBackground(m_gameConf.clearColor);
+        BeginMode2D(*m_SceneSystem->GetCurrentScene()->Get2DCamera());
+            m_RenderingSystem->Draw2D();
+        EndMode2D();
+        BeginMode3D(*m_SceneSystem->GetCurrentScene()->Get3DCamera());
+            m_RenderingSystem->Draw3D();
+        EndMode3D();
     EndDrawing();
     std::cout << "Game drawn!" << std::endl;
 }

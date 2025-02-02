@@ -3,9 +3,9 @@
 
 using namespace BENG;
 
-void GameObject::AddComponent(std::unique_ptr<GameObjectComponent> component)
+void GameObject::AddComponent(std::shared_ptr<GameObjectComponent> component)
 {
-    m_Components[component->GetName()] = std::move(component);
+    m_Components[component->GetName()] = component;
 }
 
 void GameObject::RemoveComponent(const std::string& name)

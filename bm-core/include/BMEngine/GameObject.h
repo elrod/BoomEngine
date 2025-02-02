@@ -12,7 +12,7 @@ namespace BENG
         public:
             GameObject(std::string name) : m_Name(name) {}
 
-            void AddComponent(std::unique_ptr<GameObjectComponent> component);
+            void AddComponent(std::shared_ptr<GameObjectComponent> component);
             void RemoveComponent(const std::string& name);
             GameObjectComponent* GetComponent(const std::string& name) const;
 
@@ -23,6 +23,6 @@ namespace BENG
 
         private:
             std::string m_Name;
-            std::unordered_map<std::string, std::unique_ptr<GameObjectComponent>> m_Components;
+            std::unordered_map<std::string, std::shared_ptr<GameObjectComponent>> m_Components;
     };
 }

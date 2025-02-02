@@ -1,7 +1,25 @@
+#include <memory>
+
+#include "raylib.h"
+
 #include "BMEngine/Scene.h"
 #include "BMEngine/GameObject.h"
+#include "Scene.h"
 
 using namespace BENG;
+
+Scene::Scene()
+{
+    m_2DCamera = std::make_unique<Camera2D>();
+    m_3DCamera = std::make_unique<Camera3D>();
+}
+
+Scene::~Scene()
+{
+    m_2DCamera.release();
+    m_3DCamera.release();
+    m_sceneGraph.clear();
+}
 
 void Scene::AddGameObject(std::unique_ptr<GameObject> go, const std::string& parent_name)
 {
@@ -33,4 +51,13 @@ void Scene::Update(float dt)
     for (const auto & [ goName, go ] : m_sceneGraph) {
         go->Update(dt);
     }
+}
+Camera2D *BENG::Scene::Get2DCamera() const
+{
+    return m_2DCamera.get();
+}
+
+Camera3D *BENG::Scene::Get3DCamera() const
+{
+    return m_3DCamera.get();
 }

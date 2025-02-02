@@ -1,6 +1,8 @@
 #pragma once
 
 #include "BMEngine/SceneSystem.h"
+#include "BMEngine/RenderingSystem.h"
+
 
 #include "raylib.h"
 
@@ -27,7 +29,8 @@ namespace BENG
 
         private:
             GameConf m_gameConf;
-            std::unique_ptr<SceneSystem> m_sceneSystem;
+            std::unique_ptr<SceneSystem> m_SceneSystem;
+            std::unique_ptr<RenderingSystem> m_RenderingSystem;
 
             void Initialize();
             void ProcessInput();
