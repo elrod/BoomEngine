@@ -15,7 +15,7 @@ namespace BENG
             Scene();
             ~Scene();
 
-            void AddGameObject(std::unique_ptr<GameObject> go, const std::string& parent_name);
+            void AddGameObject(std::unique_ptr<GameObject> go);
             void RemoveGameObject(const std::string& name);
             GameObject* FindGameObject(const std::string& name);
 

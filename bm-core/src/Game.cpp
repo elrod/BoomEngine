@@ -13,10 +13,6 @@ Game::Game()
 {
     m_SceneSystem = std::make_unique<SceneSystem>();
     m_RenderingSystem = std::make_unique<RenderingSystem>();
-
-    InitWindow(m_gameConf.winWidth, m_gameConf.winHeight, m_gameConf.winTitle);
-    SetTargetFPS(m_gameConf.targetFPS);
-
 }
 
 Game::~Game()
@@ -26,6 +22,10 @@ Game::~Game()
 void Game::Setup(const GameConf& conf)
 {
     m_gameConf = conf;
+
+    InitWindow(m_gameConf.winWidth, m_gameConf.winHeight, m_gameConf.winTitle);
+    SetTargetFPS(m_gameConf.targetFPS);
+
 }
 
 void Game::Start() {

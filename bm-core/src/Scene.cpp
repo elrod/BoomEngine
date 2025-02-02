@@ -21,7 +21,7 @@ Scene::~Scene()
     m_sceneGraph.clear();
 }
 
-void Scene::AddGameObject(std::unique_ptr<GameObject> go, const std::string& parent_name)
+void Scene::AddGameObject(std::unique_ptr<GameObject> go)
 {
     m_sceneGraph[go->GetName()] = std::move(go);
 }
