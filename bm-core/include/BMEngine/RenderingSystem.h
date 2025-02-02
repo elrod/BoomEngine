@@ -1,21 +1,25 @@
 #pragma once
 
+#include <string>
 #include <memory>
 #include <unordered_map>
 
-#include "BMEngine/Renderer.h"
-
 namespace BENG
 {
-    enum RendererMode
-    {
-        RENDER_2D,
-        RENDER_3D
-    };
+    class Renderer;
 
     class RenderingSystem 
     {
         public:
+            RenderingSystem(){}
+            ~RenderingSystem(){}
+
+            enum RendererMode
+            {
+                RENDER_2D,
+                RENDER_3D
+            };
+            
             void Register(std::shared_ptr<Renderer> renderer);
             void Deregister(std::shared_ptr<Renderer> renderer);
             void Draw2D();

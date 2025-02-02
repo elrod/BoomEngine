@@ -3,6 +3,7 @@
 #include "raylib.h"
 
 #include "BMEngine/Renderer.h"
+#include "BMEngine/RenderingSystem.h"
 
 namespace BENG{
     class ModelRenderer : public Renderer

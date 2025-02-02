@@ -11,6 +11,7 @@ namespace BENG
     {
         public:
             GameObject(std::string name) : m_Name(name) {}
+            ~GameObject() {}
 
             void AddComponent(std::shared_ptr<GameObjectComponent> component);
             void RemoveComponent(const std::string& name);

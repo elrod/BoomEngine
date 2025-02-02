@@ -10,19 +10,20 @@ namespace BENG
     class Renderer : public GameObjectComponent
     {
         public:
-            Renderer(std::string name, RendererMode rendererType = RendererMode::RENDER_3D) : GameObjectComponent(name) 
+            Renderer(std::string name, RenderingSystem::RendererMode rendererType =  RenderingSystem::RendererMode::RENDER_3D) : GameObjectComponent(name) 
             {
                 m_RendererType = rendererType;
             }
+            ~Renderer() {}
 
-            RendererMode GetRendererType() const
+            RenderingSystem::RendererMode GetRendererType() const
             {
                 return m_RendererType;
             }
 
-            virtual void Render() = 0;
+            virtual void Render() {};
 
         private:
-            RendererMode m_RendererType;
+            RenderingSystem::RendererMode m_RendererType;
     };
 }

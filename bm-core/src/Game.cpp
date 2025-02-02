@@ -19,6 +19,10 @@ Game::Game()
 
 }
 
+Game::~Game()
+{
+}
+
 void Game::Setup(const GameConf& conf)
 {
     m_gameConf = conf;
@@ -39,7 +43,12 @@ SceneSystem* Game::GetSceneSystem()
     return m_SceneSystem.get();
 }
 
-void Game::Initialize() {
+RenderingSystem *BENG::Game::GetRenderingSystem()
+{
+    return m_RenderingSystem.get();
+}
+void Game::Initialize()
+{
     // Initialize game here
     m_SceneSystem->GetCurrentScene()->Init();
     std::cout << "Game initialized!" << std::endl;

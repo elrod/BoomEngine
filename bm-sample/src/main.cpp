@@ -1,4 +1,8 @@
+#include "BMEngine/SceneSystem.h"
+#include "BMEngine/Scene.h"
 #include "BMEngine/Game.h"
+
+#include <memory>
 
 using namespace BENG;
 

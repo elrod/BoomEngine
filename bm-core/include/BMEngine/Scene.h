@@ -2,13 +2,13 @@
 
 #include "raylib.h"
 
-#include "BMEngine/GameObject.h"
-
 #include <unordered_map>
 #include <memory>
 
 namespace BENG
 {
+    class GameObject;
+    
     class Scene
     {
         public:

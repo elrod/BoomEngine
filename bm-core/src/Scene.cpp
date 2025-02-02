@@ -1,10 +1,10 @@
+#include <string>
 #include <memory>
 
 #include "raylib.h"
 
 #include "BMEngine/Scene.h"
 #include "BMEngine/GameObject.h"
-#include "Scene.h"
 
 using namespace BENG;
 

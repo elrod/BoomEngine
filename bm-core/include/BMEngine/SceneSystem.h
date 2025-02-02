@@ -1,14 +1,16 @@
 #pragma once
 
-#include "BMEngine/Scene.h"
-
 #include <memory>
 
 namespace BENG
 {
+    class Scene;
     class SceneSystem
     {
         public:
+            SceneSystem(){}
+            ~SceneSystem(){}
+
             void LoadScene(std::unique_ptr<Scene> scene);
             Scene *GetCurrentScene() const;
 

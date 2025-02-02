@@ -1,13 +1,12 @@
 #pragma once
 
-#include "BMEngine/SceneSystem.h"
-#include "BMEngine/RenderingSystem.h"
-
-
 #include "raylib.h"
 
 namespace BENG
 {
+    class SceneSystem;
+    class RenderingSystem;
+
     struct GameConf
     {
         char const *winTitle = "My Game";
@@ -21,11 +20,13 @@ namespace BENG
     {
         public:
             Game();
+            ~Game();
 
             void Setup(const GameConf& conf);
             void Start();
 
-            SceneSystem * GetSceneSystem();
+            SceneSystem* GetSceneSystem();
+            RenderingSystem* GetRenderingSystem();
 
         private:
             GameConf m_gameConf;
