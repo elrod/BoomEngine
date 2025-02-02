@@ -6,7 +6,7 @@
 #include "BMEngine/ModelRenderer.h"
 #include "BMEngine/GridRenderer.h"
 
-#include<iostream>
+#include <iostream>
 #include <string>
 #include <memory>
 
@@ -36,7 +36,8 @@ std::string get_executable_path() {
     return "";
 }
 
-
+// TODO: There should be a serialized asset describing the scene and the 
+// SceneSystem should actually create the scene starting from the serialized scene asset
 std::unique_ptr<Scene> make_sample_scene()
 {
     std::unique_ptr<Scene> sampleScene = std::make_unique<Scene>();
