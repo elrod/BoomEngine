@@ -3,12 +3,39 @@
 #include "BMEngine/Scene.h"
 #include "BMEngine/GameObject.h"
 #include "BMEngine/Game.h"
+#include "BMEngine/ModelRenderer.h"
 #include "BMEngine/GridRenderer.h"
 
+#include<iostream>
 #include <string>
 #include <memory>
 
+#include "raylib.h"
+
+#if defined PLATFORM_DESKTOP
+    #define GLSL_VERSION            330
+#else
+    #define GLSL_VERSION            100
+#endif
+
+#if defined __APPLE__ && PLATFORM_OSX
+    #include <mach-o/dyld.h>
+#endif
+
+
 using namespace BENG;
+
+std::string get_executable_path() {
+#if defined __APPLE__ && PLATFORM_OSX
+    char buffer[PATH_MAX];
+    uint32_t bufsize = sizeof(buffer);
+    if (_NSGetExecutablePath(buffer, &bufsize) == 0) {
+        return std::string(buffer);
+    }
+#endif
+    return "";
+}
+
 
 std::unique_ptr<Scene> make_sample_scene()
 {
@@ -24,6 +51,33 @@ std::unique_ptr<Scene> make_sample_scene()
             cam3D->fovy = 45.0f;
             cam3D->projection = CAMERA_PERSPECTIVE;
         }    
+    }
+
+    // TODO: move this resource loading logic to some kind of Resource System
+    std::string basePath = get_executable_path();
+    std::string modelPath = "";
+    if (!basePath.empty()) {
+        // Assuming the resources directory is sibling to the executable
+        modelPath = basePath.substr(0, basePath.find_last_of('/')) + "/resources/models/monkey.obj";
+    }
+    else
+    {
+        modelPath = "/resources/models/monkey.obj";
+    }
+
+    std::cout << modelPath << std::endl;
+
+    Model model = LoadModel(modelPath.c_str());
+    if (model.meshCount == 0) {
+        TraceLog(LOG_ERROR, "Failed to load model.");
+        exit(1);
+    }
+
+    std::unique_ptr<GameObject> monkeyObj = std::make_unique<GameObject>("Monkey");
+    {
+        std::shared_ptr<ModelRenderer> modelRenderer = std::make_shared<ModelRenderer>(model, "ModelRenderer");
+        monkeyObj->AddComponent(modelRenderer);
+        s_Game.GetRenderingSystem()->Register(modelRenderer);
     }
 
     std::unique_ptr<GameObject> gridObj = std::make_unique<GameObject>("Grid");

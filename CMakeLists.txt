@@ -6,6 +6,7 @@ project(BoomEngine)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 # Define the target platform with a default value if not specified
 if(NOT TARGET_PLATFORM)
     set(TARGET_PLATFORM "macos" CACHE STRING "Target platform (e.g., 'macos', 'webassembly')")
