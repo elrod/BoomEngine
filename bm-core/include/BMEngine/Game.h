@@ -1,13 +1,14 @@
 #pragma once
 
+#include <unordered_map>
+#include <typeindex>
+
+#include "BMEngine/GameSystem.h"
+
 #include "raylib.h"
 
 namespace BENG
 {
-    class SceneSystem;
-    class ResourcesSystem;
-    class RenderingSystem;
-
     struct GameConf
     {
         char const *winTitle = "My Game";
@@ -26,15 +27,19 @@ namespace BENG
             void Setup(const GameConf& conf);
             void Start();
 
-            SceneSystem* GetSceneSystem();
-            ResourcesSystem* GetResourcesSystem();
-            RenderingSystem* GetRenderingSystem();
+            template<typename TSystemType>
+            TSystemType* GetSystem() const
+            {
+                auto it = m_Systems.find(std::type_index(typeid(TSystemType)));
+                if (it != m_Systems.end()) {
+                    return static_cast<TSystemType*>(it->second.get());
+                }
+                return nullptr;
+            }
 
         private:
             GameConf m_gameConf;
-            std::unique_ptr<ResourcesSystem> m_ResourcesSystem;
-            std::unique_ptr<SceneSystem> m_SceneSystem;
-            std::unique_ptr<RenderingSystem> m_RenderingSystem;
+            std::unordered_map<std::type_index, std::unique_ptr<GameSystem>> m_Systems;
 
             void Initialize();
             void ProcessInput();

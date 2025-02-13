@@ -3,8 +3,8 @@
 namespace BENG {
 
     Model ResourcesSystem::LoadModel(const std::string& path) {
-        auto it = models.find(path);
-        if (it != models.end()) {
+        auto it = m_Models.find(path);
+        if (it != m_Models.end()) {
             return it->second;
         }
 
@@ -13,14 +13,14 @@ namespace BENG {
         if (model.meshCount == 0) {
             TraceLog(LOG_ERROR, "Failed to load model: %s", resolvedPath.c_str());
         } else {
-            models[path] = model;
+            m_Models[path] = model;
         }
         return model;
     }
 
     Texture2D ResourcesSystem::LoadTexture(const std::string& path) {
-        auto it = textures.find(path);
-        if (it != textures.end()) {
+        auto it = m_Textures.find(path);
+        if (it != m_Textures.end()) {
             return it->second;
         }
 
@@ -29,16 +29,16 @@ namespace BENG {
         if (texture.id == 0) {
             TraceLog(LOG_ERROR, "Failed to load texture: %s", resolvedPath.c_str());
         } else {
-            textures[path] = texture;
+            m_Textures[path] = texture;
         }
         return texture;
     }
 
     std::string ResourcesSystem::ResolvePath(const std::string& path) {
-        if (basePath.empty()) {
-            basePath = get_executable_path();
+        if (m_BasePath.empty()) {
+            m_BasePath = get_executable_path();
         }
-        return basePath.substr(0, basePath.find_last_of('/')) + "/resources/" + path;
+        return m_BasePath.substr(0, m_BasePath.find_last_of('/')) + "/resources/" + path;
     }
 
     std::string ResourcesSystem::get_executable_path() {

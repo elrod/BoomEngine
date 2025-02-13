@@ -40,20 +40,20 @@ std::unique_ptr<Scene> make_sample_scene()
         }    
     }
 
-    Model model = s_Game.GetResourcesSystem()->LoadModel("models/monkey.obj");
+    Model model = s_Game.GetSystem<ResourcesSystem>()->LoadModel("models/monkey.obj");
 
     std::unique_ptr<GameObject> monkeyObj = std::make_unique<GameObject>("Monkey");
     {
         std::shared_ptr<ModelRenderer> modelRenderer = std::make_shared<ModelRenderer>(model, "ModelRenderer");
         monkeyObj->AddComponent(modelRenderer);
-        s_Game.GetRenderingSystem()->Register(modelRenderer);
+        s_Game.GetSystem<RenderingSystem>()->Register(modelRenderer);
     }
 
     std::unique_ptr<GameObject> gridObj = std::make_unique<GameObject>("Grid");
     {
         std::shared_ptr<GridRenderer> gridRenderer = std::make_shared<GridRenderer>(10, 1.0f, "GridRenderer");
         gridObj->AddComponent(gridRenderer);
-        s_Game.GetRenderingSystem()->Register(gridRenderer);
+        s_Game.GetSystem<RenderingSystem>()->Register(gridRenderer);
     }
     
     sampleScene->AddGameObject(std::move(gridObj));
@@ -74,7 +74,7 @@ int main()
 
     s_Game.Setup(conf);
     
-    s_Game.GetSceneSystem()->LoadScene(std::move(make_sample_scene()));
+    s_Game.GetSystem<SceneSystem>()->LoadScene(std::move(make_sample_scene()));
     s_Game.Start();
 
     return 0;

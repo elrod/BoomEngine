@@ -5,16 +5,16 @@
 #include "BMEngine/Game.h"
 #include "BMEngine/Scene.h"
 #include "BMEngine/SceneSystem.h"
-#include "BMEngine/RenderingSystem.h"
 #include "BMEngine/ResourcesSystem.h"
+#include "BMEngine/RenderingSystem.h"
 
 using namespace BENG;
 
 Game::Game() 
 {
-    m_ResourcesSystem = std::make_unique<ResourcesSystem>();
-    m_SceneSystem = std::make_unique<SceneSystem>();
-    m_RenderingSystem = std::make_unique<RenderingSystem>();
+    m_Systems[std::type_index(typeid(SceneSystem))] = std::make_unique<SceneSystem>();
+    m_Systems[std::type_index(typeid(ResourcesSystem))] = std::make_unique<ResourcesSystem>();
+    m_Systems[std::type_index(typeid(RenderingSystem))] = std::make_unique<RenderingSystem>();
 }
 
 Game::~Game()
@@ -40,25 +40,10 @@ void Game::Start() {
     Cleanup();
 }
 
-SceneSystem* Game::GetSceneSystem()
-{
-    return m_SceneSystem.get();
-}
-
-ResourcesSystem *BENG::Game::GetResourcesSystem()
-{
-    return m_ResourcesSystem.get();
-}
-
-RenderingSystem *BENG::Game::GetRenderingSystem()
-{
-    return m_RenderingSystem.get();
-}
-
 void Game::Initialize()
 {
     // Initialize game here
-    m_SceneSystem->GetCurrentScene()->Init();
+    GetSystem<BENG::SceneSystem>()->GetCurrentScene()->Init();
     std::cout << "Game initialized!" << std::endl;
 }
 
@@ -69,7 +54,7 @@ void Game::ProcessInput() {
 
 void Game::Update(float dt) {
     // Game logic update code here
-    m_SceneSystem->GetCurrentScene()->Update(dt);
+    GetSystem<BENG::SceneSystem>()->GetCurrentScene()->Update(dt);
     std::cout << "Game updated!" << std::endl;
 }
 
@@ -77,11 +62,11 @@ void Game::Draw() {
     // Drawing code here
     BeginDrawing();
         ClearBackground(m_gameConf.clearColor);
-        BeginMode2D(*m_SceneSystem->GetCurrentScene()->Get2DCamera());
-            m_RenderingSystem->Draw2D();
+        BeginMode2D(*GetSystem<BENG::SceneSystem>()->GetCurrentScene()->Get2DCamera());
+            GetSystem<BENG::RenderingSystem>()->Draw2D();
         EndMode2D();
-        BeginMode3D(*m_SceneSystem->GetCurrentScene()->Get3DCamera());
-            m_RenderingSystem->Draw3D();
+        BeginMode3D(*GetSystem<BENG::SceneSystem>()->GetCurrentScene()->Get3DCamera());
+            GetSystem<BENG::RenderingSystem>()->Draw3D();
         EndMode3D();
     EndDrawing();
     std::cout << "Game drawn!" << std::endl;

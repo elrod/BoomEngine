@@ -1,11 +1,13 @@
 #pragma once
 
+#include "BMEngine/GameSystem.h"
+
 #include <memory>
 
 namespace BENG
 {
     class Scene;
-    class SceneSystem
+    class SceneSystem : public GameSystem
     {
         public:
             SceneSystem(){}

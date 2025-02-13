@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BMEngine/GameSystem.h"
+
 #include <string>
 #include <memory>
 #include <unordered_map>
@@ -8,7 +10,7 @@ namespace BENG
 {
     class Renderer;
 
-    class RenderingSystem 
+    class RenderingSystem : public GameSystem
     {
         public:
             RenderingSystem(){}
