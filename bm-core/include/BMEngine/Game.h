@@ -5,6 +5,7 @@
 namespace BENG
 {
     class SceneSystem;
+    class ResourcesSystem;
     class RenderingSystem;
 
     struct GameConf
@@ -26,10 +27,12 @@ namespace BENG
             void Start();
 
             SceneSystem* GetSceneSystem();
+            ResourcesSystem* GetResourcesSystem();
             RenderingSystem* GetRenderingSystem();
 
         private:
             GameConf m_gameConf;
+            std::unique_ptr<ResourcesSystem> m_ResourcesSystem;
             std::unique_ptr<SceneSystem> m_SceneSystem;
             std::unique_ptr<RenderingSystem> m_RenderingSystem;
 

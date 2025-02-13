@@ -6,11 +6,13 @@
 #include "BMEngine/Scene.h"
 #include "BMEngine/SceneSystem.h"
 #include "BMEngine/RenderingSystem.h"
+#include "BMEngine/ResourcesSystem.h"
 
 using namespace BENG;
 
 Game::Game() 
 {
+    m_ResourcesSystem = std::make_unique<ResourcesSystem>();
     m_SceneSystem = std::make_unique<SceneSystem>();
     m_RenderingSystem = std::make_unique<RenderingSystem>();
 }
@@ -43,10 +45,16 @@ SceneSystem* Game::GetSceneSystem()
     return m_SceneSystem.get();
 }
 
+ResourcesSystem *BENG::Game::GetResourcesSystem()
+{
+    return m_ResourcesSystem.get();
+}
+
 RenderingSystem *BENG::Game::GetRenderingSystem()
 {
     return m_RenderingSystem.get();
 }
+
 void Game::Initialize()
 {
     // Initialize game here
