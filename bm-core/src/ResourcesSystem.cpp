@@ -1,5 +1,9 @@
 #include "BMEngine/ResourcesSystem.h"
 
+#if defined __APPLE__ && PLATFORM_OSX
+    #include <mach-o/dyld.h>
+#endif
+
 namespace BENG {
 
     Model ResourcesSystem::LoadModel(const std::string& path) {
@@ -52,4 +56,4 @@ namespace BENG {
         return "";
     }
 
-} // namespace BENG
+}

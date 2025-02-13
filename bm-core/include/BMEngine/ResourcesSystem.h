@@ -1,16 +1,11 @@
 #pragma once
 
 #include <string>
-#include <memory>
 #include <unordered_map>
 
 #include "BMEngine/GameSystem.h"
 
 #include "raylib.h"
-
-#if defined __APPLE__ && PLATFORM_OSX
-    #include <mach-o/dyld.h>
-#endif
 
 namespace BENG {
 
