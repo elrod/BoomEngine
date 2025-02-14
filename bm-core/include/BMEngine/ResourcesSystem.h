@@ -15,6 +15,7 @@ namespace BENG {
             ResourcesSystem(){}
             ~ResourcesSystem(){}
             Model LoadModel(const std::string& path);
+            Shader LoadShader(const std::string& vsPath, const std::string& fsPath);
             Texture2D LoadTexture(const std::string& path);
 
         private:
@@ -22,6 +23,7 @@ namespace BENG {
             std::string get_executable_path();
 
             std::unordered_map<std::string, Model> m_Models;
+            std::unordered_map<std::string, Shader> m_Shaders;
             std::unordered_map<std::string, Texture2D> m_Textures;
 
             std::string m_BasePath;

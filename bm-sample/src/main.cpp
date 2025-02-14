@@ -26,6 +26,8 @@ using namespace BENG;
 // SceneSystem should actually create the scene starting from the serialized scene asset
 std::unique_ptr<Scene> make_sample_scene()
 {
+
+
     std::unique_ptr<Scene> sampleScene = std::make_unique<Scene>();
 
     {
@@ -40,7 +42,15 @@ std::unique_ptr<Scene> make_sample_scene()
         }    
     }
 
-    Model model = s_Game.GetSystem<ResourcesSystem>()->LoadModel("models/monkey.obj");
+    ResourcesSystem *resourcesSystem = s_Game.GetSystem<ResourcesSystem>();
+    if(resourcesSystem == nullptr)
+    {
+        TraceLog(LOG_FATAL, "No Resource System");
+        exit(1);
+    }
+
+    Model model = resourcesSystem->LoadModel("models/monkey.obj");
+    Shader simpleLit = resourcesSystem->LoadShader("shaders/lighting.vs", "shaders/lighting.fs");
 
     std::unique_ptr<GameObject> monkeyObj = std::make_unique<GameObject>("Monkey");
     {

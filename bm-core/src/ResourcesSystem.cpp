@@ -22,6 +22,26 @@ namespace BENG {
         return model;
     }
 
+    Shader ResourcesSystem::LoadShader(const std::string& vsPath, const std::string& fsPath)
+    {
+        std::string shaderKey = vsPath + fsPath;
+        auto it = m_Shaders.find(shaderKey);
+        if (it != m_Shaders.end()) {
+            return it->second;
+        }
+
+        std::string resolvedVSPath = ResolvePath(vsPath);
+        std::string resolvedFSPath = ResolvePath(fsPath);
+
+        Shader shader = ::LoadShader(resolvedVSPath.c_str(), resolvedFSPath.c_str());
+        if (shader.id == 0) {
+            TraceLog(LOG_ERROR, "Failed to load shader: vs: %s, fs: %s", resolvedVSPath.c_str(), resolvedFSPath.c_str());
+        } else {
+            m_Shaders[shaderKey] = shader;
+        }
+        return shader;
+    }
+
     Texture2D ResourcesSystem::LoadTexture(const std::string& path) {
         auto it = m_Textures.find(path);
         if (it != m_Textures.end()) {
